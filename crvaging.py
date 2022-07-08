@@ -90,6 +90,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     #print("Shape of PE_yield: ", PE_yield.shape)
     #print("Shape of date: ", date.shape)
     plt.scatter(date, PE_yield)
+    plt.ylim(bottom=0)
     plt.xlabel('Date of run')
     plt.ylabel('PE yield')
     plt.title('PE yield over time for FEB {0}, channel {1}'.format(feb, channel))
