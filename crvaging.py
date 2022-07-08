@@ -80,6 +80,7 @@ for i in range(nfiles):
 for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     for i in range(nfiles):
         data = d["data_{0}".format(i)]
+        print("Shape of data: ", data.shape)
         PE_yield[i] = data[j, 3]
     if j < 64:
         feb = 0
@@ -87,6 +88,8 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     else:
         feb = 1
         channel = j - 64
+    print("Shape of PE_yield: ", PE_yield.shape)
+    print("Shape of date: ", date.shape)
     plt.scatter(date, PE_yield)
     plt.xlabel('Date of run')
     plt.ylabel('PE yield')
