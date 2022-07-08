@@ -52,7 +52,7 @@ for i in range(nfiles):
         np.append(date, datetime.datetime(2022, 3, 7))
         #date[i] = datetime.datetime(2022, 3, 7)
     if i == 29:
-        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1021_000.txt', skipheader=2)
+        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1021_000.txt', skip_header=2)
         np.append(date, datetime.datetime(2022, 3, 10))
         #date[i] = datetime.datetime(2022, 3, 10)
     if i >= 30 and i <= 32:
