@@ -91,12 +91,12 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
         feb = 1
         channel = j - 64
     linfit_params = np.polyfit(timediff, PE_yield, 1)
-    slope = linfit_params[0] / PE_yield[0] * 100
+    slope = truncate(linfit_params[0] / PE_yield[0] * 100, 2)
     linfit_fnct = np.poly1d(linfit_params)
     plt.plot(timediff, PE_yield, 'r.', timediff, linfit_fnct(timediff), '--k')
     plt.text(0.4, 45, 'PE yield change: {0} %/yr'.format(slope))
     plt.ylim(0,50)
-    plt.xlabel('Time since July 8, 2021 [yr]')
+    plt.xlabel('Years since July 8, 2021')
     plt.ylabel('PE yield')
     plt.title('PE yield over time for FEB {0}, channel {1}'.format(feb, channel))
     plt.savefig('aging_feb{0}_ch{1}.pdf'.format(feb, channel))
