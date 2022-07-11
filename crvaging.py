@@ -83,7 +83,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
         duration = date[i] - date[0]
-        timediff[i] = divmod(duration.total_seconds(), 31536000)[0]
+        timediff[i] = duration.total_seconds() / 31536000
     if j < 64:
         feb = 0
         channel = j
