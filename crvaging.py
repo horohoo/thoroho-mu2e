@@ -77,21 +77,26 @@ for i in range(nfiles):
         #date[i] = datetime.datetime(2022, 5, 11)
 
 # now that the data is imported, loop through each FEB/channel and plot data
+timediff = np.zeros(nfiles)
 for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     for i in range(nfiles):
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
+        duration = date[i] - date[0]
+        timediff[i] = divmod(duration.total_seconds(), 31536000)[0]
     if j < 64:
         feb = 0
         channel = j
     else:
         feb = 1
         channel = j - 64
-    #print("Shape of PE_yield: ", PE_yield.shape)
-    #print("Shape of date: ", date.shape)
-    plt.scatter(date, PE_yield)
-    plt.ylim(bottom=0)
-    plt.xlabel('Date of run')
+    linfit_params = np.polyfit(timediff, PE_yield, 1)
+    slope = linfit_params[0] / PE_yield[0] * 100
+    linfit_fnct = np.poly1d(linfit_params)
+    plt.plot(timediff, PE_yield, 'r.', timediff, linfit_fnct(timediff), '--k')
+    plt.text(0.4, 45, 'PE yield change: {0} %/yr'.format(slope))
+    plt.ylim(0,50)
+    plt.xlabel('Time since July 8, 2021 [yr]')
     plt.ylabel('PE yield')
     plt.title('PE yield over time for FEB {0}, channel {1}'.format(feb, channel))
     plt.savefig('aging_feb{0}_ch{1}.pdf'.format(feb, channel))
