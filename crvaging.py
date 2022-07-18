@@ -90,6 +90,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     linfit_params = np.polyfit(timediff, PE_yield, 1)
     slope = round(linfit_params[0] / PE_yield[0] * 100, 2)
     linfit_fnct = np.poly1d(linfit_params)
+    plt.figure(num=j)
     plt.plot(timediff, PE_yield, 'r.', timediff, linfit_fnct(timediff), '--k')
     plt.text(0.4, 45, 'PE yield change: {0} %/yr'.format(slope))
     plt.ylim(0,50)
