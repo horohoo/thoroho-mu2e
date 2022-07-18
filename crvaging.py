@@ -13,7 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 
-nfiles = 42
+nfiles = 36
 d = {}
 filehead = '../rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
 # import the data
@@ -21,57 +21,54 @@ date = np.array([])
 PE_yield = np.zeros(nfiles)
 for i in range(nfiles):
     # hard-coded information about dates of runs
-    if i <= 1:
+    if i == 0:
         d["data_{0}".format(i)] = np.genfromtxt(filehead + '0066_00' + str(i) + '.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2021, 7, 8))
         #date[i] = datetime.datetime(2021, 7, 8)
-    if i >= 2 and i <= 14:
-        if i >= 2 and i <= 11:
-            d["data_{0}".format(i)] = np.genfromtxt(filehead + '0094_00' + str(i-2) + '.txt', skip_header=2)
-        if i >= 12 and i <= 14:
-            d["data_{0}".format(i)] = np.genfromtxt(filehead + '0094_0' + str(i-2) + '.txt', skip_header=2)
+    if i >= 1 and i <= 12:
+        if i >= 1 and i <= 10:
+            d["data_{0}".format(i)] = np.genfromtxt(filehead + '0094_00' + str(i-1) + '.txt', skip_header=2)
+        if i >= 11 and i <= 12:
+            d["data_{0}".format(i)] = np.genfromtxt(filehead + '0094_0' + str(i-1) + '.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2021, 12, 10))
         #date[i] = datetime.datetime(2021, 12, 10)
-    if i >= 15 and i <= 25:
-        if i >= 15 and i <= 24:
-            d["data_{0}".format(i)] = np.genfromtxt(filehead + '0105_00' + str(i-15) + '.txt', skip_header=2)
-        if i == 25:
-            d["data_{0}".format(i)] = np.genfromtxt(filehead + '0105_010.txt', skip_header=2)
+    if i >= 13 and i <= 22:
+        d["data_{0}".format(i)] = np.genfromtxt(filehead + '0105_00' + str(i-13) + '.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 1, 12))
         #date[i] = datetime.datetime(2022, 1, 12)
-    if i == 26:
+    if i == 23:
         d["data_{0}".format(i)] = np.genfromtxt(filehead + '0119_000.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 2, 15))
         #date[i] = datetime.datetime(2022, 2, 15)
-    if i == 27:
+    if i == 24:
         d["data_{0}".format(i)] = np.genfromtxt(filehead + '1010_000.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 2, 25))
         #date[i] = datetime.datetime(2022, 2, 25)
-    if i == 28:
+    if i == 25:
         d["data_{0}".format(i)] = np.genfromtxt(filehead + '1020_000.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 3, 7))
         #date[i] = datetime.datetime(2022, 3, 7)
-    if i == 29:
+    if i == 26:
         d["data_{0}".format(i)] = np.genfromtxt(filehead + '1021_000.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 3, 10))
         #date[i] = datetime.datetime(2022, 3, 10)
-    if i >= 30 and i <= 32:
-        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1022_00' + str(i-30) + '.txt', skip_header=2)
+    if i >= 27 and i <= 28:
+        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1022_00' + str(i-27) + '.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 3, 18))
         #date[i] = datetime.datetime(2022, 3, 18)
-    if i == 33:
+    if i == 29:
         d["data_{0}".format(i)] = np.genfromtxt(filehead + '1031_000.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 4, 27))
         #date[i] = datetime.datetime(2022, 4, 27)
-    if i == 34 or i == 35:
-        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1033_00' + str(i-34) + '.txt', skip_header=2)
+    if i == 30:
+        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1033_000.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 4, 29))
         #date[i] = datetime.datetime(2022, 4, 29)
-    if i >= 36 and i <= 40:
-        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1034_00' + str(i-36) + '.txt', skip_header=2)
+    if i >= 31 and i <= 34:
+        d["data_{0}".format(i)] = np.genfromtxt(filehead + '1034_00' + str(i-31) + '.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 5, 2))
         #date[i] = datetime.datetime(2022, 5, 2)
-    if i == 41:
+    if i == 35:
         d["data_{0}".format(i)] = np.genfromtxt(filehead + '1035_000.txt', skip_header=2)
         date = np.append(date, datetime.datetime(2022, 5, 11))
         #date[i] = datetime.datetime(2022, 5, 11)
