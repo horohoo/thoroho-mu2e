@@ -110,11 +110,11 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.close(fig=j)
 
 plt.figure(num=128)
-hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b')
-hist1 = plt.hist(FEB1, bins=histbins, histtype='step', color='r')
-plt.legend([hist0, hist1], ['FEB 0', 'FEB 1'])
+hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b', label='FEB 0')
+hist1 = plt.hist(FEB1, bins=histbins, histtype='step', color='r', label='FEB 1')
+plt.legend()
 plt.xlabel('% PE yield change over time')
 plt.ylabel('Channels / % change')
 plt.savefig('percent_histogram.pdf')
 plt.close(fig=128)
-#
+"""
