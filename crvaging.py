@@ -75,21 +75,30 @@ for i in range(nfiles):
 
 # now that the data is imported, loop through each FEB/channel and plot data
 timediff = np.zeros(nfiles)
+FEB0 = np.zeros(64)
+FEB1 = np.zeros(64)
+histbins = np.linspace(0.0, 15.0, num=16)
+
 for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     for i in range(nfiles):
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
         duration = date[i] - date[0]
         timediff[i] = duration.total_seconds() / 31536000
-    if j < 64:
-        feb = 0
-        channel = j
-    else:
-        feb = 1
-        channel = j - 64
+        
     linfit_params = np.polyfit(timediff, PE_yield, 1)
     slope = round(linfit_params[0] / PE_yield[0] * 100, 2)
     linfit_fnct = np.poly1d(linfit_params)
+
+    if j < 64:
+        feb = 0
+        channel = j
+        FEB0[channel] = slope
+    else:
+        feb = 1
+        channel = j - 64
+        FEB1[channel] = slope
+    
     plt.figure(num=j)
     plt.plot(timediff, PE_yield, 'r.', timediff, linfit_fnct(timediff), '--k')
     plt.text(0.4, 45, 'PE yield change: {0} %/yr'.format(slope))
@@ -99,4 +108,13 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.title('PE yield over time for FEB {0}, channel {1}'.format(feb, channel))
     plt.savefig('aging_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
+
+plt.figure(num=128)
+hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b')
+hist1 = plt.hist(FEB1, bins=histbins, histtype='step', color='r')
+plt.legend([hist0, hist1], ['FEB 0', 'FEB 1'])
+plt.xlabel('% PE yield change over time')
+plt.ylabel('Channels / % change')
+plt.savefig('percent_histogram.pdf')
+plt.close(fig=128)
 #
