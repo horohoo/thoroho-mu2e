@@ -15,7 +15,7 @@ import datetime
 
 nfiles = 36
 d = {}
-filehead = '../rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
+filehead = '/pnfs/mu2e/scratch/users/thoroho/recotar/crvreco/rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
 # import the data
 date = np.array([])
 PE_yield = np.zeros(nfiles)
@@ -98,7 +98,8 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
         feb = 1
         channel = j - 64
         FEB1[channel] = -1 * slope
-    
+    print('Finished FEB {0} channel {1} ...'.format(feb, channel))
+    """
     plt.figure(num=j)
     plt.plot(timediff, PE_yield, 'r.', timediff, linfit_fnct(timediff), '--k')
     plt.text(0.4, 45, 'PE yield change: {0} %/yr'.format(slope))
@@ -108,9 +109,8 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.title('PE yield over time for FEB {0}, channel {1}'.format(feb, channel))
     plt.savefig('aging_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
+    """
 
-
-print(FEB0)
 plt.figure(num=128)
 hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b', label='FEB 0')
 hist1 = plt.hist(FEB1, bins=histbins, histtype='step', color='r', label='FEB 1')
