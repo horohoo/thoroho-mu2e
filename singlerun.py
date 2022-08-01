@@ -17,7 +17,7 @@ nfiles = 12
 d = {}
 filehead = '/pnfs/mu2e/scratch/users/thoroho/recotar/crvreco/rec.mu2e.CRV_wideband_cosmics.crvaging-001.000094_0'
 # import the data
-run = np.linspace(nfiles)
+run = np.arange(nfiles)
 PE_yield = np.zeros(nfiles)
 for i in range(nfiles):
     # hard-coded information about dates of runs
