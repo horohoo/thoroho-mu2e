@@ -32,12 +32,9 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     for i in range(nfiles):
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
-    print(PE_yield)
         
-    mean = round(np.mean(data), 2)
-    std = round(np.std(data), 2)
-    print(np.mean(data), mean)
-    print(np.std(data), std)
+    mean = round(np.mean(PE_yield), 2)
+    std = round(np.std(PE_yield), 2)
 
     if j < 64:
         feb = 0
