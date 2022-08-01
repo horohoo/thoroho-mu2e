@@ -50,7 +50,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.xlabel('Run # (approx 2 days)')
     plt.ylabel('PE yield')
     plt.title('PE yield of run 94, FEB {0}, channel {1}'.format(feb, channel))
-    plt.savefig('run94_feb{0}_ch{1}.pdf'.format(feb, channel))
+    plt.savefig('run94/run94_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
     
 
