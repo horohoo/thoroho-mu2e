@@ -36,6 +36,8 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
         
     mean = round(np.mean(data), 2)
     std = round(np.std(data), 2)
+    print(np.mean(data), mean)
+    print(np.std(data), std)
 
     if j < 64:
         feb = 0
