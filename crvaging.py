@@ -109,13 +109,15 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.savefig('aging_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
 
+
+print(FEB0)
 plt.figure(num=128)
 hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b', label='FEB 0')
 hist1 = plt.hist(FEB1, bins=histbins, histtype='step', color='r', label='FEB 1')
 plt.legend()
 plt.xlabel('% PE yield change over time')
 plt.ylabel('Channels / % change')
+plt.ylim(bottom=0)
 plt.savefig('percent_histogram.pdf')
 plt.close(fig=128)
-
 #
