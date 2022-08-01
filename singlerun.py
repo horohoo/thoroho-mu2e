@@ -33,8 +33,8 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
         
-    mean = np.average(data)
-    std = np.std(data)
+    mean = round(np.average(data), 2)
+    std = round(np.std(data), 2)
 
     if j < 64:
         feb = 0
@@ -45,7 +45,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     
     plt.figure(num=j)
     plt.plot(run, PE_yield, 'r.')
-    plt.text(2, 20, 'PE yield: mean {0}, standard deviation {1}'.format(mean, std))
+    plt.text(1, 20, 'PE yield: mean {0}, standard deviation {1}'.format(mean, std))
     plt.ylim(0,50)
     plt.xlabel('Run # (approx 2 days)')
     plt.ylabel('PE yield')
