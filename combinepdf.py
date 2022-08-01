@@ -11,7 +11,7 @@ merger = PdfMerger()
 
 for feb in range(2):
     for ch in range(64):
-        merger.append('aging_feb{0}_ch{1}.pdf'.format(feb, ch))
+        merger.append('run94_feb{0}_ch{1}.pdf'.format(feb, ch))
 
-merger.write("aging.pdf")
+merger.write("run94.pdf")
 merger.close()
