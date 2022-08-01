@@ -93,11 +93,11 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     if j < 64:
         feb = 0
         channel = j
-        FEB0[channel] = slope
+        FEB0[channel] = -1 * slope
     else:
         feb = 1
         channel = j - 64
-        FEB1[channel] = slope
+        FEB1[channel] = -1 * slope
     
     plt.figure(num=j)
     plt.plot(timediff, PE_yield, 'r.', timediff, linfit_fnct(timediff), '--k')
