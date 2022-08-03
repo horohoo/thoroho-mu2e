@@ -74,8 +74,8 @@ for i in range(nfiles):
         #date[i] = datetime.datetime(2022, 5, 11)
 
 # now that the data is imported, loop through each FEB/channel and plot data
-FEB0 = np.zeros(64)
-FEB1 = np.zeros(64)
+FEB0_raw = np.zeros(64)
+FEB1_raw = np.zeros(64)
 histbins = np.linspace(0.0, 15.0, num=16)
 
 for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
@@ -108,16 +108,16 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
                 data = d["data_{0}".format(i)]
                 PE_yield[i - badfiles] = data[j, 3]
                 duration = date[i] - date[0]
-                timediff[i - badfiles] = data[j, 3]
+                timediff[i - badfiles] = duration.total_seconds() / 31536000
         
     linfit_params = np.polyfit(timediff, PE_yield, 1)
     slope = round(linfit_params[0] / PE_yield[0] * 100, 2)
     linfit_fnct = np.poly1d(linfit_params)
 
     if j < 64:
-        FEB0[channel] = -1 * slope
+        FEB0_raw[channel] = -1 * slope
     else:
-        FEB1[channel] = -1 * slope
+        FEB1_raw[channel] = -1 * slope
     print('Finished FEB {0} channel {1} ...'.format(feb, channel))
     
     plt.figure(num=j)
@@ -129,7 +129,14 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.title('PE yield over time for FEB {0}, channel {1}'.format(feb, channel))
     plt.savefig('aging/aging_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
-    
+
+#channels to exclude
+rm_FEB0 = [28, 29, 30, 31, 56, 57, 58, 59, 60, 61, 62, 63]
+rm_FEB1 = [18]
+
+FEB0 = np.delete(FEB0_raw, rm_FEB0)
+FEB1 = np.delete(FEB1_raw, rm_FEB1)
+
 mean0 = round(np.mean(FEB0), 2)
 mean1 = round(np.mean(FEB1), 2)
 
