@@ -14,11 +14,11 @@ import matplotlib.pyplot as plt
 import datetime
 
 nfiles = 36
+badfiles = 14
 d = {}
 filehead = '/pnfs/mu2e/scratch/users/thoroho/recotar/crvreco/rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
 # import the data
 date = np.array([])
-PE_yield = np.zeros(nfiles)
 for i in range(nfiles):
     # hard-coded information about dates of runs
     if i == 0:
@@ -74,46 +74,68 @@ for i in range(nfiles):
         #date[i] = datetime.datetime(2022, 5, 11)
 
 # now that the data is imported, loop through each FEB/channel and plot data
-timediff = np.zeros(nfiles)
 FEB0 = np.zeros(64)
 FEB1 = np.zeros(64)
 histbins = np.linspace(0.0, 15.0, num=16)
 
 for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
-    for i in range(nfiles):
-        data = d["data_{0}".format(i)]
-        PE_yield[i] = data[j, 3]
-        duration = date[i] - date[0]
-        timediff[i] = duration.total_seconds() / 31536000
+    if j < 64:
+        feb = 0
+        channel = j
+
+        timediff = np.zeros(nfiles)
+        PE_yield = np.zeros(nfiles)
+        
+        for i in range(nfiles):
+            data = d["data_{0}".format(i)]
+            PE_yield[i] = data[j, 3]
+            duration = date[i] - date[0]
+            timediff[i] = duration.total_seconds() / 31536000
+    else:
+        feb = 1
+        channel = j - 64
+
+        timediff = np.zeros(nfiles - badfiles)
+        PE_yield = np.zeros(nfiles - badfiles)
+        
+        for i in range(nfiles):
+            if i < 9:
+                data = d["data_{0}".format(i)]
+                PE_yield[i] = data[j, 3]
+                duration = date[i] - date[0]
+                timediff[i] = duration.total_seconds() / 31536000                
+            elif i > 22:
+                data = d["data_{0}".format(i)]
+                PE_yield[i - badfiles] = data[j, 3]
+                duration = date[i] - date[0]
+                timediff[i - badfiles] = data[j, 3]
         
     linfit_params = np.polyfit(timediff, PE_yield, 1)
     slope = round(linfit_params[0] / PE_yield[0] * 100, 2)
     linfit_fnct = np.poly1d(linfit_params)
 
     if j < 64:
-        feb = 0
-        channel = j
         FEB0[channel] = -1 * slope
     else:
-        feb = 1
-        channel = j - 64
         FEB1[channel] = -1 * slope
     print('Finished FEB {0} channel {1} ...'.format(feb, channel))
-    """
+    
     plt.figure(num=j)
     plt.plot(timediff, PE_yield, 'r.', timediff, linfit_fnct(timediff), '--k')
-    plt.text(0.4, 45, 'PE yield change: {0} %/yr'.format(slope))
-    plt.ylim(0,50)
+    plt.text(0.4, 46, 'PE yield change: {0} %/yr'.format(slope))
+    plt.ylim(30,50)
     plt.xlabel('Years since July 8, 2021')
     plt.ylabel('PE yield')
     plt.title('PE yield over time for FEB {0}, channel {1}'.format(feb, channel))
-    plt.savefig('aging_feb{0}_ch{1}.pdf'.format(feb, channel))
+    plt.savefig('aging/aging_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
-    """
+    
+mean0 = round(np.mean(FEB0), 2)
+mean1 = round(np.mean(FEB1), 2)
 
 plt.figure(num=128)
-hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b', label='FEB 0')
-hist1 = plt.hist(FEB1, bins=histbins, histtype='step', color='r', label='FEB 1')
+hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b', label='FEB 0 ({0})'.format(mean0))
+hist1 = plt.hist(FEB1, bins=histbins, histtype='step', color='r', label='FEB 1 ({0})'.format(mean1))
 plt.legend()
 plt.xlabel('% PE yield change over time')
 plt.ylabel('Channels / % change')
