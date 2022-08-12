@@ -46,7 +46,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     for i in range(nfiles):
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
-        temperature[i] = data[j, 6]
+        temperature[i] = data[j, 8]
         print('Temperature: ', temperature[i])
         duration = date[i] - date[0]
         timediff[i] = duration.total_seconds() / 86400 # time after t=0 in days
@@ -77,14 +77,9 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.savefig('smallrun/smallrun_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
 
+    colorarray = ['red','orange','yellow','green','blue','indigo','violet']
     plt.figure(num=129+j)
-    plt.plot(temperature[0], PE_yield[0], 'red.')
-    plt.plot(temperature[1], PE_yield[1], 'orange.')
-    plt.plot(temperature[2], PE_yield[2], 'yellow.')
-    plt.plot(temperature[3], PE_yield[3], 'green.')
-    plt.plot(temperature[4], PE_yield[4], 'blue.')
-    plt.plot(temperature[5], PE_yield[5], 'indigo.')
-    plt.plot(temperature[6], PE_yield[6], 'violet.')
+    plt.scatter(temperature, PE_yield, c=colorarray)
     plt.xlim(22,24)
     plt.ylim(30, 50)
     plt.xlabel('Average temp. of CMB [degC]')
