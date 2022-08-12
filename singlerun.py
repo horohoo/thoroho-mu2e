@@ -80,7 +80,6 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     colorarray = ['red','orange','yellow','green','blue','indigo','violet']
     plt.figure(num=129+j)
     plt.scatter(temperature, PE_yield, c=colorarray)
-    plt.xlim(22,24)
     plt.ylim(30, 50)
     plt.xlabel('Average temp. of CMB [degC]')
     plt.ylabel('Temperature corrected PE yield')
