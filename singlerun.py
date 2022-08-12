@@ -47,6 +47,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
         temperature[i] = data[j, 6]
+        print('Temperature: ', temperature[i])
         duration = date[i] - date[0]
         timediff[i] = duration.total_seconds() / 86400 # time after t=0 in days
         timediff_years[i] = duration.total_seconds() / 31536000
