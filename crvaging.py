@@ -16,7 +16,7 @@ import datetime
 nfiles = 36
 badfiles = 14
 d = {}
-filehead = '/pnfs/mu2e/scratch/users/thoroho/recotar/crvreco/rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
+filehead = '/pnfs/mu2e/scratch/outstage/ehrlich/wideband8/crvreco/rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
 # import the data
 date = np.array([])
 for i in range(nfiles):
