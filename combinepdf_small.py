@@ -7,11 +7,20 @@
 
 from PyPDF2 import PdfMerger
 
-merger = PdfMerger()
+merger1 = PdfMerger()
 
 for feb in range(2):
     for ch in range(64):
-        merger.append('smallrun/smallrun_feb{0}_ch{1}.pdf'.format(feb, ch))
+        merger1.append('smallrun/PEvstemp_feb{0}_ch{1}.pdf'.format(feb, ch))
 
-merger.write("smallrun.pdf")
-merger.close()
+merger1.write("PEvstemp.pdf")
+merger1.close()
+
+merger2 = PdfMerger()
+
+for feb in range(2):
+    for ch in range(64):
+        merger2.append('smallrun/smallrun_feb{0}_ch{1}.pdf'.format(feb, ch))
+
+merger2.write("smallrun.pdf")
+merger2.close()

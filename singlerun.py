@@ -16,10 +16,11 @@ import datetime
 
 nfiles = 7
 d = {}
-filehead = '/pnfs/mu2e/scratch/users/thoroho/recotar/crvreco/rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
+filehead = '/pnfs/mu2e/scratch/outstage/ehrlich/wideband8/crvreco/rec.mu2e.CRV_wideband_cosmics.crvaging-001.00'
 # import the data
 date = np.array([])
 PE_yield = np.zeros(nfiles)
+temperature = np.zeros(nfiles)
 for i in range(nfiles):
     # hard-coded information about dates of runs
     if i == 0:
@@ -45,6 +46,7 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     for i in range(nfiles):
         data = d["data_{0}".format(i)]
         PE_yield[i] = data[j, 3]
+        temperature[i] = data[j, 8]
         duration = date[i] - date[0]
         timediff[i] = duration.total_seconds() / 86400 # time after t=0 in days
         timediff_years[i] = duration.total_seconds() / 31536000
@@ -73,6 +75,21 @@ for j in range(128): # 0-63 are FEB 0 and 64-127 are FEB 1
     plt.title('PE yield over short timespan, FEB {0}, channel {1}'.format(feb, channel))
     plt.savefig('smallrun/smallrun_feb{0}_ch{1}.pdf'.format(feb, channel))
     plt.close(fig=j)
+
+    plt.figure(num=129+j)
+    plt.scatter(temperature[0], PE_yield[0], 'red.')
+    plt.scatter(temperature[1], PE_yield[1], 'orange.')
+    plt.scatter(temperature[2], PE_yield[2], 'yellow.')
+    plt.scatter(temperature[3], PE_yield[3], 'green.')
+    plt.scatter(temperature[4], PE_yield[4], 'blue.')
+    plt.scatter(temperature[5], PE_yield[5], 'indigo.')
+    plt.scatter(temperature[6], PE_yield[6], 'violet.')
+    plt.xlim(22,24)
+    plt.ylim(30, 50)
+    plt.xlabel('Average temp. of CMB [degC]')
+    plt.ylabel('Temperature corrected PE yield')
+    plt.savefig('smallrun/PEvstemp_feb{0}_ch{1}.pdf'.format(feb, channel))
+    plt.close(fig=129+j)
 
 plt.figure(num=128)
 hist0 = plt.hist(FEB0, bins=histbins, histtype='step', color='b', label='FEB 0')
